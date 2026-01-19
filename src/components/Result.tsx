@@ -33,9 +33,6 @@ export default function Result({ onNavigate }: ResultProps) {
         2: false
     });
 
-    // ✅ NOVO: Estado para controlar fases progressivas da Ventana
-    const [ventanaPhaseVisible, setVentanaPhaseVisible] = useState(0); // 0=intro, 1=fase1, 2=fase2, 3=fase3
-
     const getInitialTime = () => {
         const savedTimestamp = localStorage.getItem('quiz_timer_start');
         if (savedTimestamp) {
@@ -179,14 +176,6 @@ export default function Result({ onNavigate }: ResultProps) {
         };
     }, [currentPhase]);
 
-    // ✅ NOVO: Reset ventanaPhaseVisible quando entra na fase 3
-    useEffect(() => {
-        if (currentPhase === 3) {
-            setVentanaPhaseVisible(0); // Começa mostrando só intro
-            ga4Tracking.revelationViewed('Ventana 72 Horas - Intro', 3);
-        }
-    }, [currentPhase]);
-
     useEffect(() => {
         if (currentPhase !== 2 || !videoSectionRef.current) return;
         
@@ -281,56 +270,6 @@ export default function Result({ onNavigate }: ResultProps) {
             ga4Tracking.revelationViewed('Ventana 72 Horas', 2);
             setFadeOutPhase(null);
         }, 400);
-    };
-
-    // ✅ NOVO: Handlers para progressão das fases da Ventana
-    const handleVentanaPhase1Click = () => {
-        playKeySound();
-        setVentanaPhaseVisible(1);
-        ga4Tracking.phaseProgressionClicked({ 
-            phase_from: 'ventana_intro', 
-            phase_to: 'ventana_fase_1', 
-            button_name: 'Revelar Fase 1' 
-        });
-        // Scroll suave para o card da fase 1
-        setTimeout(() => {
-            const fase1Element = document.getElementById('ventana-fase-1');
-            if (fase1Element) {
-                fase1Element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 100);
-    };
-
-    const handleVentanaPhase2Click = () => {
-        playKeySound();
-        setVentanaPhaseVisible(2);
-        ga4Tracking.phaseProgressionClicked({ 
-            phase_from: 'ventana_fase_1', 
-            phase_to: 'ventana_fase_2', 
-            button_name: 'Entendí Fase 1 - Mostrar Fase 2' 
-        });
-        setTimeout(() => {
-            const fase2Element = document.getElementById('ventana-fase-2');
-            if (fase2Element) {
-                fase2Element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 100);
-    };
-
-    const handleVentanaPhase3Click = () => {
-        playKeySound();
-        setVentanaPhaseVisible(3);
-        ga4Tracking.phaseProgressionClicked({ 
-            phase_from: 'ventana_fase_2', 
-            phase_to: 'ventana_fase_3', 
-            button_name: 'Entendí Fase 2 - Mostrar Fase 3' 
-        });
-        setTimeout(() => {
-            const fase3Element = document.getElementById('ventana-fase-3');
-            if (fase3Element) {
-                fase3Element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 100);
     };
 
     const handlePhase3ButtonClick = () => {
@@ -631,12 +570,33 @@ export default function Result({ onNavigate }: ResultProps) {
                         ref={ventana72SectionRef} 
                         className={`revelation fade-in ventana-box-custom ${fadeOutPhase === 3 ? 'fade-out' : ''}`}
                     >
+                        {/* ✅ TÍTULO */}
                         <div className="ventana-header-custom">
                             <span>⚡</span>
                             <h2>LA VENTANA DE 72 HORAS</h2>
                         </div>
 
-                        {/* ✅ INTRO + IMPORTÂNCIA + SUMÁRIO (sempre visível) */}
+                        {/* ✅ MINI EXPLICAÇÃO CIENTÍFICA (ANTES DA IMAGEM) */}
+                        <div className="ventana-scientific-intro">
+                            <p>
+                                Estudios de Harvard y Nature Neuroscience comprueban: existen ventanas neuroquímicas de 72 horas donde el cerebro de tu ex multiplica su receptividad emocional (dopamina, oxitocina, apego). 
+                                <strong> Este es el fundamento científico del proceso que verás ahora.</strong>
+                            </p>
+                        </div>
+
+                        {/* ✅ IMAGEM DA REPORTAGEM (MOVIDA PARA O TOPO) */}
+                        <img 
+                            src="https://comprarplanseguro.shop/wp-content/uploads/2025/10/imagem3-nova.webp" 
+                            alt="Ventana 72h - Fundamento Científico" 
+                            className="ventana-img-top"
+                        />
+
+                        {/* ✅ LEGENDA DA IMAGEM (DISCRETA) */}
+                        <p className="ventana-img-caption">
+                            La ciencia confirma: 72 horas es la ventana crítica para reactivar vínculos emocionales.
+                        </p>
+
+                        {/* ✅ CONTEÚDO ORIGINAL DA VENTANA (mantido) */}
                         <div className="ventana-importance-box">
                             <h3 className="importance-title">🔥 Por qué la Ventana es crucial</h3>
                             <div className="importance-bullets">
@@ -657,210 +617,55 @@ export default function Result({ onNavigate }: ResultProps) {
                             </div>
                         </div>
 
-                        {/* ✅ Botão para revelar Fase 1 */}
-                        {ventanaPhaseVisible === 0 && (
-                            <button 
-                                className="cta-button btn-yellow btn-size-2 btn-animation-pulse"
-                                onClick={handleVentanaPhase1Click}
-                                style={{ marginTop: 'clamp(20px, 4vw, 28px)' }}
-                            >
-                                🎯 Revelar Fase 1 (0-24 HORAS)
-                            </button>
-                        )}
+                        {/* ✅ FASES (formato cards dopaminéticos) */}
+                        <div className="fases-list-dopamine">
+                            {[1, 2, 3].map(f => {
+                                const faseData = getFaseText(gender, f);
+                                return (
+                                    <div key={f} className="fase-card-dopamine">
+                                        <div className="fase-card-header">
+                                            <div className="fase-number">FASE {f}</div>
+                                            <div className="fase-timerange">{faseData.timeRange}</div>
+                                        </div>
 
-                        {/* ✅ FASE 1 (visível após clicar) */}
-                        {ventanaPhaseVisible >= 1 && (
-                            <div 
-                                id="ventana-fase-1"
-                                className={`fase-card-progressive fade-in ${ventanaPhaseVisible > 1 ? 'fase-completed' : ''}`}
-                                style={{ marginTop: 'clamp(20px, 4vw, 28px)' }}
-                            >
-                                {(() => {
-                                    const faseData = getFaseText(gender, 1);
-                                    return (
-                                        <>
-                                            <div className="fase-progress-indicator">
-                                                <span className="fase-current">Fase 1 de 3</span>
-                                                <div className="fase-progress-bar-wrapper">
-                                                    <div className="fase-progress-bar" style={{ width: '33.33%' }}></div>
+                                        <h4 className="fase-card-title">
+                                            {f === 1 ? '🎯' : f === 2 ? '💡' : '❤️'} {faseData.title}
+                                        </h4>
+
+                                        <p className="fase-card-summary">{faseData.summary}</p>
+
+                                        <div className="fase-card-bullets">
+                                            {faseData.bullets.map((bullet, index) => (
+                                                <div key={index} className="fase-bullet-item">
+                                                    {bullet}
                                                 </div>
-                                            </div>
+                                            ))}
+                                        </div>
 
-                                            <div className="fase-card-header">
-                                                <div className="fase-number">FASE 1</div>
-                                                <div className="fase-timerange">{faseData.timeRange}</div>
-                                            </div>
+                                        <div className="fase-card-warning">{faseData.warning}</div>
 
-                                            <h4 className="fase-card-title">
-                                                🎯 {faseData.title}
-                                            </h4>
+                                        <div className="fase-card-footer">
+                                            <span className="fase-check">✔️ Fase {f} concluída</span>
+                                            {f < 3 && <span className="fase-next">Avance para la próxima →</span>}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
 
-                                            <p className="fase-card-summary">{faseData.summary}</p>
-
-                                            <div className="fase-card-bullets">
-                                                {faseData.bullets.map((bullet, index) => (
-                                                    <div key={index} className="fase-bullet-item">{bullet}</div>
-                                                ))}
-                                            </div>
-
-                                            <div className="fase-card-warning">{faseData.warning}</div>
-
-                                            {ventanaPhaseVisible === 1 && (
-                                                <button 
-                                                    className="cta-button btn-green btn-size-2 btn-animation-pulse"
-                                                    onClick={handleVentanaPhase2Click}
-                                                    style={{ marginTop: 'clamp(16px, 4vw, 20px)' }}
-                                                >
-                                                    ✅ Entendí - Mostrar Fase 2 (24-48h)
-                                                    <span style={{ 
-                                                        display: 'block', 
-                                                        fontSize: 'clamp(0.8rem, 3vw, 0.95rem)',
-                                                        opacity: 0.9,
-                                                        fontWeight: '600',
-                                                        marginTop: '4px'
-                                                    }}>
-                                                        ↓ Cómo reactivar su interés
-                                                    </span>
-                                                </button>
-                                            )}
-                                        </>
-                                    );
-                                })()}
-                            </div>
-                        )}
-
-                        {/* ✅ FASE 2 (visível após clicar no botão da Fase 1) */}
-                        {ventanaPhaseVisible >= 2 && (
-                            <div 
-                                id="ventana-fase-2"
-                                className={`fase-card-progressive fade-in ${ventanaPhaseVisible > 2 ? 'fase-completed' : ''}`}
-                                style={{ marginTop: 'clamp(20px, 4vw, 28px)' }}
-                            >
-                                {(() => {
-                                    const faseData = getFaseText(gender, 2);
-                                    return (
-                                        <>
-                                            <div className="fase-progress-indicator">
-                                                <span className="fase-current">Fase 2 de 3</span>
-                                                <div className="fase-progress-bar-wrapper">
-                                                    <div className="fase-progress-bar" style={{ width: '66.66%' }}></div>
-                                                </div>
-                                            </div>
-
-                                            <div className="fase-card-header">
-                                                <div className="fase-number">FASE 2</div>
-                                                <div className="fase-timerange">{faseData.timeRange}</div>
-                                            </div>
-
-                                            <h4 className="fase-card-title">
-                                                💡 {faseData.title}
-                                            </h4>
-
-                                            <p className="fase-card-summary">{faseData.summary}</p>
-
-                                            <div className="fase-card-bullets">
-                                                {faseData.bullets.map((bullet, index) => (
-                                                    <div key={index} className="fase-bullet-item">{bullet}</div>
-                                                ))}
-                                            </div>
-
-                                            <div className="fase-card-warning">{faseData.warning}</div>
-
-                                            {ventanaPhaseVisible === 2 && (
-                                                <button 
-                                                    className="cta-button btn-green btn-size-2 btn-animation-pulse"
-                                                    onClick={handleVentanaPhase3Click}
-                                                    style={{ marginTop: 'clamp(16px, 4vw, 20px)' }}
-                                                >
-                                                    ✅ Entendí - Mostrar Fase 3 (48-72h)
-                                                    <span style={{ 
-                                                        display: 'block', 
-                                                        fontSize: 'clamp(0.8rem, 3vw, 0.95rem)',
-                                                        opacity: 0.9,
-                                                        fontWeight: '600',
-                                                        marginTop: '4px'
-                                                    }}>
-                                                        ↓ El momento crítico de reconexión
-                                                    </span>
-                                                </button>
-                                            )}
-                                        </>
-                                    );
-                                })()}
-                            </div>
-                        )}
-
-                        {/* ✅ FASE 3 (visível após clicar no botão da Fase 2) */}
-                        {ventanaPhaseVisible >= 3 && (
-                            <div 
-                                id="ventana-fase-3"
-                                className="fase-card-progressive fade-in"
-                                style={{ marginTop: 'clamp(20px, 4vw, 28px)' }}
-                            >
-                                {(() => {
-                                    const faseData = getFaseText(gender, 3);
-                                    return (
-                                        <>
-                                            <div className="fase-progress-indicator">
-                                                <span className="fase-current">Fase 3 de 3</span>
-                                                <div className="fase-progress-bar-wrapper">
-                                                    <div className="fase-progress-bar" style={{ width: '100%' }}></div>
-                                                </div>
-                                            </div>
-
-                                            <div className="fase-card-header">
-                                                <div className="fase-number">FASE 3</div>
-                                                <div className="fase-timerange">{faseData.timeRange}</div>
-                                            </div>
-
-                                            <h4 className="fase-card-title">
-                                                ❤️ {faseData.title}
-                                            </h4>
-
-                                            <p className="fase-card-summary">{faseData.summary}</p>
-
-                                            <div className="fase-card-bullets">
-                                                {faseData.bullets.map((bullet, index) => (
-                                                    <div key={index} className="fase-bullet-item">{bullet}</div>
-                                                ))}
-                                            </div>
-
-                                            <div className="fase-card-warning">{faseData.warning}</div>
-                                        </>
-                                    );
-                                })()}
-                            </div>
-                        )}
-
-                        {/* ✅ Imagem (sempre visível) */}
-                        <img 
-                            src="https://comprarplanseguro.shop/wp-content/uploads/2025/10/imagem3-nova.webp" 
-                            alt="Ventana 72h" 
-                            className="ventana-img"
-                        />
-
-                        {/* ✅ Botão final (só aparece após ver Fase 3) */}
+                        {/* ✅ BOTÃO FINAL */}
                         {buttonCheckmarks[2] ? (
                             <div className="checkmark-container">
                                 <div className="checkmark-glow">✅</div>
                             </div>
-                        ) : ventanaPhaseVisible >= 3 ? (
+                        ) : (
                             <button 
                                 className="cta-button btn-orange btn-size-3 btn-animation-pulse" 
                                 onClick={handlePhase3ButtonClick}
                             >
-                                ⚡ QUIERO MI PLAN COMPLETO AHORA
-                                <span style={{ 
-                                    display: 'block', 
-                                    fontSize: 'clamp(0.85rem, 3vw, 1rem)',
-                                    opacity: 0.9,
-                                    fontWeight: '600',
-                                    marginTop: '4px'
-                                }}>
-                                    ↓ Acceso instantáneo por $17
-                                </span>
+                                ⚡ Revelar Mi Plan Personalizado
                             </button>
-                        ) : null}
+                        )}
                     </div>
                 )}
 
@@ -1310,7 +1115,7 @@ export default function Result({ onNavigate }: ResultProps) {
                 .testimonials-section { margin-top: clamp(32px, 6vw, 48px); display: flex; flex-direction: column; gap: clamp(20px, 4vw, 24px); }
                 .testimonial-card { border-radius: 16px; padding: clamp(20px, 5vw, 28px); display: flex; gap: clamp(16px, 4vw, 20px); align-items: flex-start; }
                 
-                /* ✅ ESTILOS VENTANA */
+                /* ✅ NOVOS ESTILOS PARA VENTANA OTIMIZADA */
                 .ventana-box-custom { 
                     background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(234, 179, 8, 0.1)); 
                     border: 3px solid rgba(249, 115, 22, 0.5); 
@@ -1323,10 +1128,51 @@ export default function Result({ onNavigate }: ResultProps) {
                 .ventana-header-custom span { font-size: clamp(2.5rem, 8vw, 3.5rem); display: block; margin-bottom: clamp(12px, 3vw, 16px); }
                 .ventana-header-custom h2 { font-size: clamp(1.5rem, 6vw, 2rem); color: #f97316; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
 
+                /* ✅ MINI EXPLICAÇÃO CIENTÍFICA (ANTES DA IMAGEM) */
+                .ventana-scientific-intro {
+                    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(74, 222, 128, 0.1));
+                    border-left: 4px solid #10b981;
+                    border-radius: 12px;
+                    padding: clamp(16px, 4vw, 20px);
+                    margin-bottom: clamp(20px, 4vw, 24px);
+                }
+                .ventana-scientific-intro p {
+                    font-size: clamp(1rem, 4vw, 1.15rem);
+                    line-height: 1.7;
+                    color: rgba(255,255,255,0.95);
+                    margin: 0;
+                }
+                .ventana-scientific-intro strong {
+                    color: #4ade80;
+                    font-weight: 700;
+                }
+
+                /* ✅ IMAGEM NO TOPO (MOVIDA) */
+                .ventana-img-top { 
+                    width: 100%; 
+                    max-width: 600px; 
+                    border-radius: 16px; 
+                    margin: 0 auto clamp(12px, 3vw, 16px) auto; 
+                    display: block; 
+                    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4); 
+                    border: 3px solid rgba(249, 115, 22, 0.3); 
+                }
+
+                /* ✅ LEGENDA DA IMAGEM (DISCRETA) */
+                .ventana-img-caption {
+                    font-size: clamp(0.85rem, 3.5vw, 1rem);
+                    line-height: 1.5;
+                    color: rgba(255,255,255,0.7);
+                    text-align: center;
+                    font-style: italic;
+                    margin: 0 0 clamp(24px, 5vw, 32px) 0;
+                    padding: 0 clamp(12px, 3vw, 16px);
+                }
+
                 .ventana-importance-box {
                     background: rgba(234, 179, 8, 0.1);
                     border: 2px solid rgba(234, 179, 8, 0.3);
-                    borderRadius: 12px;
+                    border-radius: 12px;
                     padding: clamp(16px, 4vw, 20px);
                     margin-bottom: clamp(20px, 4vw, 28px);
                 }
@@ -1381,44 +1227,25 @@ export default function Result({ onNavigate }: ResultProps) {
                     font-weight: 600;
                 }
 
-                /* ✅ CARDS PROGRESSIVOS */
-                .fase-card-progressive {
+                /* ✅ CARDS DOPAMINÉTICOS DAS FASES */
+                .fases-list-dopamine { 
+                    display: flex; 
+                    flex-direction: column; 
+                    gap: clamp(16px, 4vw, 20px);
+                    margin: clamp(24px, 5vw, 32px) 0; 
+                }
+
+                .fase-card-dopamine {
                     background: linear-gradient(135deg, rgba(234, 179, 8, 0.12), rgba(249, 115, 22, 0.08));
                     border: 2px solid rgba(234, 179, 8, 0.35);
                     border-radius: 14px;
-                    padding: clamp(16px, 4vw, 20px);
+                    padding: clamp(14px, 4vw, 18px);
                     box-shadow: 0 4px 16px rgba(234, 179, 8, 0.15);
-                    transition: opacity 0.3s ease, transform 0.3s ease;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
                 }
-                .fase-card-progressive.fase-completed {
-                    opacity: 0.5;
-                    transform: scale(0.98);
-                }
-
-                .fase-progress-indicator {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-                    margin-bottom: clamp(12px, 3vw, 16px);
-                }
-                .fase-current {
-                    font-size: clamp(0.85rem, 3.5vw, 1rem);
-                    color: #10b981;
-                    font-weight: 900;
-                    text-align: center;
-                }
-                .fase-progress-bar-wrapper {
-                    width: 100%;
-                    height: 6px;
-                    background: rgba(255,255,255,0.15);
-                    border-radius: 3px;
-                    overflow: hidden;
-                }
-                .fase-progress-bar {
-                    height: 100%;
-                    background: linear-gradient(90deg, #10b981, #4ade80);
-                    border-radius: 3px;
-                    transition: width 0.5s ease;
+                .fase-card-dopamine:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(234, 179, 8, 0.25);
                 }
 
                 .fase-card-header {
@@ -1481,16 +1308,25 @@ export default function Result({ onNavigate }: ResultProps) {
                     font-size: clamp(0.85rem, 3.5vw, 1rem);
                     color: #fca5a5;
                     font-weight: 600;
+                    margin-bottom: clamp(10px, 2.5vw, 12px);
                 }
 
-                .ventana-img { 
-                    width: 100%; 
-                    max-width: 600px; 
-                    border-radius: 16px; 
-                    margin: clamp(24px, 5vw, 32px) auto; 
-                    display: block; 
-                    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4); 
-                    border: 3px solid rgba(249, 115, 22, 0.3); 
+                .fase-card-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-top: clamp(10px, 2.5vw, 12px);
+                    border-top: 1px solid rgba(255,255,255,0.1);
+                }
+                .fase-check {
+                    font-size: clamp(0.85rem, 3.5vw, 1rem);
+                    color: #4ade80;
+                    font-weight: 700;
+                }
+                .fase-next {
+                    font-size: clamp(0.8rem, 3vw, 0.95rem);
+                    color: rgba(255,255,255,0.6);
+                    font-weight: 600;
                 }
 
                 .offer-section-custom { background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); border-radius: 16px; padding: clamp(20px, 5vw, 40px); margin-bottom: 30px; }
