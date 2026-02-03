@@ -77,8 +77,8 @@ export default function Result({ onNavigate }: ResultProps) {
         }
     };
 
-    const appendUTMsToHotmartURL = (): string => {
-        const baseURL = getHotmartUrl();
+    const appendUTMsToHotmartURL = (plan?: number): string => {
+        const baseURL = getHotmartUrl(plan);
         const utms = getUTMs();
         if (Object.keys(utms).length === 0) return baseURL;
         const url = new URL(baseURL);
@@ -278,7 +278,7 @@ export default function Result({ onNavigate }: ResultProps) {
             return;
         }
         ga4Tracking.ctaBuyClicked('result_buy_main');
-        window.open(appendUTMsToHotmartURL(), '_blank');
+        window.open(appendUTMsToHotmartURL(selectedPlan), '_blank');
     };
 
     const getDelayEmoji = (secondsLeft: number) => {
@@ -863,7 +863,7 @@ export default function Result({ onNavigate }: ResultProps) {
                                         borderRadius: '6px',
                                         display: 'inline-block'
                                     }}>
-                                        (MENOS QUE UN CAFÉ)
+                                        CASI EL DOBLE DE VALOR
                                     </p>
                                 </div>
                                 
