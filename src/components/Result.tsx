@@ -603,9 +603,9 @@ export default function Result({ onNavigate }: ResultProps) {
                         {/* INSTRUÇÃO: Insira os links das imagens diretamente no atributo src="" abaixo */}
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                            gap: 'clamp(16px, 4vw, 24px)',
-                            marginBottom: 'clamp(24px, 5vw, 32px)'
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: 'clamp(8px, 2vw, 12px)',
+                            marginBottom: 'clamp(16px, 3vw, 24px)'
                         }}>
                             {/* Foto 1 - COLE O LINK DA PRIMEIRA IMAGEM NO src="" */}
                             <img 
@@ -815,7 +815,27 @@ export default function Result({ onNavigate }: ResultProps) {
                                     ⭐ MÁS VENDIDO • RECOMENDADO
                                 </div>
                                 
-                                <div style={{ marginBottom: 'clamp(16px, 4vw, 20px)', marginTop: '8px' }}>
+                                {/* Aviso casos críticos DENTRO do card $27 */}
+                                <div style={{
+                                    background: 'rgba(234, 179, 8, 0.2)',
+                                    borderRadius: '8px',
+                                    padding: 'clamp(8px, 2vw, 10px) clamp(12px, 3vw, 14px)',
+                                    marginBottom: 'clamp(10px, 2.5vw, 12px)',
+                                    marginTop: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <p style={{
+                                        fontSize: 'clamp(0.8rem, 3vw, 0.95rem)',
+                                        color: '#facc15',
+                                        fontWeight: '700',
+                                        margin: 0,
+                                        lineHeight: '1.3'
+                                    }}>
+                                        ⚠️ Casos críticos (ella con otro): 73% eligen este plan
+                                    </p>
+                                </div>
+                                
+                                <div style={{ marginBottom: 'clamp(14px, 3.5vw, 18px)' }}>
                                     <h3 style={{ fontSize: 'clamp(1.25rem, 5vw, 1.6rem)', color: '#10b981', fontWeight: '900', margin: '0 0 8px 0' }}>
                                         Plan Total
                                     </h3>
@@ -880,75 +900,73 @@ export default function Result({ onNavigate }: ResultProps) {
                             </div>
                         </div>
 
-                        {/* Box de ajuda para escolher plano */}
-                        <div style={{
-                            background: 'rgba(234, 179, 8, 0.1)',
-                            border: '2px solid rgba(234, 179, 8, 0.3)',
-                            borderRadius: '12px',
-                            padding: 'clamp(16px, 4vw, 20px)',
-                            marginBottom: 'clamp(24px, 5vw, 32px)'
-                        }}>
-                            <p style={{
-                                fontSize: 'clamp(1rem, 4vw, 1.2rem)',
-                                color: '#facc15',
-                                fontWeight: '700',
-                                marginBottom: 'clamp(12px, 3vw, 14px)',
-                                textAlign: 'center'
-                            }}>
-                                ⚠️ ¿No sabes cuál elegir?
-                            </p>
-                            <p style={{
-                                fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
+                        {/* ✅ CTA PRINCIPAL - POSIÇÃO OTIMIZADA (logo após os planos) */}
+                        <button 
+                            className="cta-button btn-green btn-size-4 btn-animation-pulse" 
+                            onClick={handleCTAClick}
+                            style={{
+                                width: '100%',
+                                background: selectedPlan ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(100,100,100,0.5)',
                                 color: 'white',
-                                lineHeight: '1.6',
-                                marginBottom: 'clamp(12px, 3vw, 14px)'
+                                fontWeight: '900',
+                                padding: 'clamp(20px, 4vw, 26px)',
+                                borderRadius: '16px',
+                                border: selectedPlan ? '4px solid #4ade80' : '4px solid rgba(150,150,150,0.5)',
+                                cursor: selectedPlan ? 'pointer' : 'not-allowed',
+                                boxShadow: selectedPlan ? '0 8px 32px rgba(16, 185, 129, 0.6)' : 'none',
+                                animation: selectedPlan ? 'pulse 1.5s infinite' : 'none',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: 'clamp(6px, 1.5vw, 8px)',
+                                marginBottom: 'clamp(16px, 3vw, 24px)',
+                                transition: 'all 0.3s ease'
+                            }}
+                        >
+                            <span style={{
+                                fontSize: 'clamp(1.2rem, 4.5vw, 1.6rem)',
+                                lineHeight: '1.3'
                             }}>
-                                Si ella está con otro tipo o te bloqueó, <strong style={{ color: '#4ade80' }}>NECESITAS el Módulo 4</strong> (Protocolo de Emergencia).
-                            </p>
-                            <p style={{
-                                fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
-                                color: 'white',
-                                lineHeight: '1.6',
-                                marginBottom: 'clamp(12px, 3vw, 14px)'
-                            }}>
-                                Por solo USD 13 más, obtienes:
-                            </p>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: 'clamp(12px, 3vw, 14px)' }}>
-                                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: '#4ade80' }}>✅ Módulo 4: Protocolo de Emergencia (casos críticos)</div>
-                                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: '#4ade80' }}>✅ Soporte prioritario por WhatsApp</div>
-                                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: '#4ade80' }}>✅ Actualizaciones de por vida</div>
-                                <div style={{ fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)', color: '#4ade80' }}>✅ Acceso a comunidad exclusiva</div>
-                            </div>
-                            <p style={{
+                                {selectedPlan 
+                                    ? `🚀 ACCEDER A MI PLAN POR $${selectedPlan}` 
+                                    : '👆 ELIGE UN PLAN ARRIBA PRIMERO'
+                                }
+                            </span>
+                            <span style={{
                                 fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
-                                color: 'rgba(255,255,255,0.8)',
-                                textAlign: 'center',
-                                margin: 0,
-                                fontStyle: 'italic'
+                                color: '#fef08a',
+                                fontWeight: '700'
                             }}>
-                                73% de los casos críticos eligen el Plan Total.
-                            </p>
-                        </div>
+                                ⏰ Tu análisis expira en {formatTime(offerTimeLeft)} • Solo {spotsLeft} vacantes
+                            </span>
+                            <span style={{
+                                fontSize: 'clamp(0.8rem, 3vw, 0.95rem)',
+                                color: 'rgba(255,255,255,0.95)',
+                                fontWeight: '600'
+                            }}>
+                                🛡️ Garantía de 30 días • Riesgo cero
+                            </span>
+                        </button>
 
-                        {/* ✅ MELHORIA #6: 4 Depoimentos detalhados */}
+                        {/* ✅ MELHORIA #6: 2 Depoimentos (Mateo + Pablo) */}
                         <div style={{
-                            marginTop: 'clamp(32px, 6vw, 48px)',
-                            marginBottom: 'clamp(32px, 6vw, 48px)'
+                            marginTop: 'clamp(20px, 4vw, 32px)',
+                            marginBottom: 'clamp(20px, 4vw, 32px)'
                         }}>
                             <h2 style={{
-                                fontSize: 'clamp(1.5rem, 6vw, 2rem)',
+                                fontSize: 'clamp(1.4rem, 5.5vw, 1.8rem)',
                                 color: 'white',
                                 fontWeight: '900',
                                 textAlign: 'center',
-                                marginBottom: 'clamp(24px, 5vw, 32px)'
+                                marginBottom: 'clamp(16px, 3vw, 24px)'
                             }}>
-                                Nuestros Clientes Aman Este Plan
+                                Lo Que Dicen Quienes Ya Recuperaron A Su Ex
                             </h2>
                             
                             <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: 'clamp(20px, 4vw, 24px)'
+                                gap: 'clamp(12px, 3vw, 16px)'
                             }}>
                                 
                                 {/* DEPOIMENTO 1: Mateo R. - Argentina */}
@@ -956,10 +974,10 @@ export default function Result({ onNavigate }: ResultProps) {
                                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(74, 222, 128, 0.1))',
                                     border: '2px solid rgba(16, 185, 129, 0.4)',
                                     borderRadius: '16px',
-                                    padding: 'clamp(20px, 5vw, 28px)',
+                                    padding: 'clamp(14px, 3.5vw, 20px)',
                                     boxShadow: '0 8px 24px rgba(16, 185, 129, 0.3)',
                                     display: 'flex',
-                                    gap: 'clamp(16px, 4vw, 20px)',
+                                    gap: 'clamp(12px, 3vw, 16px)',
                                     alignItems: 'flex-start',
                                     flexDirection: 'row',
                                     flexWrap: 'wrap'
@@ -969,8 +987,8 @@ export default function Result({ onNavigate }: ResultProps) {
                                         src="" 
                                         alt="Mateo R." 
                                         style={{
-                                            width: 'clamp(60px, 15vw, 80px)',
-                                            height: 'clamp(60px, 15vw, 80px)',
+                                            width: 'clamp(55px, 14vw, 70px)',
+                                            height: 'clamp(55px, 14vw, 70px)',
                                             borderRadius: '50%',
                                             objectFit: 'cover',
                                             border: '3px solid rgba(16, 185, 129, 0.6)',
@@ -982,17 +1000,17 @@ export default function Result({ onNavigate }: ResultProps) {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '8px',
-                                            marginBottom: 'clamp(8px, 2vw, 12px)',
+                                            marginBottom: 'clamp(6px, 1.5vw, 10px)',
                                             flexWrap: 'wrap'
                                         }}>
                                             <strong style={{
-                                                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+                                                fontSize: 'clamp(0.95rem, 3.8vw, 1.15rem)',
                                                 color: '#10b981'
                                             }}>
                                                 Mateo R.
                                             </strong>
                                             <span style={{
-                                                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+                                                fontSize: 'clamp(0.7rem, 2.8vw, 0.8rem)',
                                                 color: 'rgba(255,255,255,0.6)'
                                             }}>
                                                 • Buenos Aires, Argentina • 4 días atrás
@@ -1000,14 +1018,14 @@ export default function Result({ onNavigate }: ResultProps) {
                                         </div>
                                         <div style={{
                                             color: '#facc15',
-                                            fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-                                            marginBottom: 'clamp(8px, 2vw, 10px)'
+                                            fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)',
+                                            marginBottom: 'clamp(6px, 1.5vw, 8px)'
                                         }}>
                                             ⭐⭐⭐⭐⭐
                                         </div>
                                         <p style={{
-                                            fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
-                                            lineHeight: '1.6',
+                                            fontSize: 'clamp(0.85rem, 3.2vw, 1rem)',
+                                            lineHeight: '1.5',
                                             color: 'white',
                                             margin: 0,
                                             fontStyle: 'italic'
@@ -1017,81 +1035,15 @@ export default function Result({ onNavigate }: ResultProps) {
                                     </div>
                                 </div>
 
-                                {/* DEPOIMENTO 2: Alejandro M. - México */}
-                                <div style={{
-                                    background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(250, 204, 21, 0.1))',
-                                    border: '2px solid rgba(234, 179, 8, 0.4)',
-                                    borderRadius: '16px',
-                                    padding: 'clamp(20px, 5vw, 28px)',
-                                    boxShadow: '0 8px 24px rgba(234, 179, 8, 0.3)',
-                                    display: 'flex',
-                                    gap: 'clamp(16px, 4vw, 20px)',
-                                    alignItems: 'flex-start',
-                                    flexDirection: 'row',
-                                    flexWrap: 'wrap'
-                                }}>
-                                    {/* Avatar Alejandro - COLE O LINK DA FOTO NO src="" */}
-                                    <img 
-                                        src="" 
-                                        alt="Alejandro M." 
-                                        style={{
-                                            width: 'clamp(60px, 15vw, 80px)',
-                                            height: 'clamp(60px, 15vw, 80px)',
-                                            borderRadius: '50%',
-                                            objectFit: 'cover',
-                                            border: '3px solid rgba(234, 179, 8, 0.6)',
-                                            flexShrink: 0
-                                        }}
-                                    />
-                                    <div style={{ flex: 1, minWidth: '200px' }}>
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '8px',
-                                            marginBottom: 'clamp(8px, 2vw, 12px)',
-                                            flexWrap: 'wrap'
-                                        }}>
-                                            <strong style={{
-                                                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-                                                color: '#eab308'
-                                            }}>
-                                                Alejandro M.
-                                            </strong>
-                                            <span style={{
-                                                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
-                                                color: 'rgba(255,255,255,0.6)'
-                                            }}>
-                                                • Ciudad de México, México • 2 días atrás
-                                            </span>
-                                        </div>
-                                        <div style={{
-                                            color: '#facc15',
-                                            fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-                                            marginBottom: 'clamp(8px, 2vw, 10px)'
-                                        }}>
-                                            ⭐⭐⭐⭐⭐
-                                        </div>
-                                        <p style={{
-                                            fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
-                                            lineHeight: '1.6',
-                                            color: 'white',
-                                            margin: 0,
-                                            fontStyle: 'italic'
-                                        }}>
-                                            "¡Una victoria enorme! Amo este programa. Llevábamos 5 meses sin hablar y ella me había bloqueado de WhatsApp. He tenido múltiples llamadas y citas con mi ex después de seguir la 'regla de no contacto' del Módulo 1. Todo fue muy bien y ella notó mi crecimiento emocional en 2 meses. Su ansiedad sobre nuestra relación está desapareciendo. Su frase de 'nunca jamás estaremos juntos' está cambiando lentamente a 'si volvemos a estar juntos'. En 13 días ella me desbloqueó y me escribió primero. ¡Lo veo como una gran victoria!"
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* DEPOIMENTO 3: Pablo S. - España (CURTO) */}
+                                {/* DEPOIMENTO 2: Pablo S. - España (CURTO) */}
                                 <div style={{
                                     background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(74, 222, 128, 0.1))',
                                     border: '2px solid rgba(16, 185, 129, 0.4)',
                                     borderRadius: '16px',
-                                    padding: 'clamp(16px, 4vw, 20px)',
+                                    padding: 'clamp(12px, 3vw, 16px)',
                                     boxShadow: '0 8px 24px rgba(16, 185, 129, 0.3)',
                                     display: 'flex',
-                                    gap: 'clamp(16px, 4vw, 20px)',
+                                    gap: 'clamp(12px, 3vw, 16px)',
                                     alignItems: 'flex-start',
                                     flexDirection: 'row',
                                     flexWrap: 'wrap'
@@ -1101,8 +1053,8 @@ export default function Result({ onNavigate }: ResultProps) {
                                         src="" 
                                         alt="Pablo S." 
                                         style={{
-                                            width: 'clamp(60px, 15vw, 80px)',
-                                            height: 'clamp(60px, 15vw, 80px)',
+                                            width: 'clamp(55px, 14vw, 70px)',
+                                            height: 'clamp(55px, 14vw, 70px)',
                                             borderRadius: '50%',
                                             objectFit: 'cover',
                                             border: '3px solid rgba(16, 185, 129, 0.6)',
@@ -1114,17 +1066,17 @@ export default function Result({ onNavigate }: ResultProps) {
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '8px',
-                                            marginBottom: 'clamp(8px, 2vw, 12px)',
+                                            marginBottom: 'clamp(6px, 1.5vw, 10px)',
                                             flexWrap: 'wrap'
                                         }}>
                                             <strong style={{
-                                                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+                                                fontSize: 'clamp(0.95rem, 3.8vw, 1.15rem)',
                                                 color: '#10b981'
                                             }}>
                                                 Pablo S.
                                             </strong>
                                             <span style={{
-                                                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
+                                                fontSize: 'clamp(0.7rem, 2.8vw, 0.8rem)',
                                                 color: 'rgba(255,255,255,0.6)'
                                             }}>
                                                 • Madrid, España • Ayer
@@ -1132,14 +1084,14 @@ export default function Result({ onNavigate }: ResultProps) {
                                         </div>
                                         <div style={{
                                             color: '#facc15',
-                                            fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-                                            marginBottom: 'clamp(8px, 2vw, 10px)'
+                                            fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)',
+                                            marginBottom: 'clamp(6px, 1.5vw, 8px)'
                                         }}>
                                             ⭐⭐⭐⭐⭐
                                         </div>
                                         <p style={{
-                                            fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
-                                            lineHeight: '1.6',
+                                            fontSize: 'clamp(0.85rem, 3.2vw, 1rem)',
+                                            lineHeight: '1.5',
                                             color: 'white',
                                             margin: 0,
                                             fontStyle: 'italic',
@@ -1149,87 +1101,21 @@ export default function Result({ onNavigate }: ResultProps) {
                                         </p>
                                     </div>
                                 </div>
-
-                                {/* DEPOIMENTO 4: Andrés L. - Colombia */}
-                                <div style={{
-                                    background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(250, 204, 21, 0.1))',
-                                    border: '2px solid rgba(234, 179, 8, 0.4)',
-                                    borderRadius: '16px',
-                                    padding: 'clamp(20px, 5vw, 28px)',
-                                    boxShadow: '0 8px 24px rgba(234, 179, 8, 0.3)',
-                                    display: 'flex',
-                                    gap: 'clamp(16px, 4vw, 20px)',
-                                    alignItems: 'flex-start',
-                                    flexDirection: 'row',
-                                    flexWrap: 'wrap'
-                                }}>
-                                    {/* Avatar Andrés - COLE O LINK DA FOTO NO src="" */}
-                                    <img 
-                                        src="" 
-                                        alt="Andrés L." 
-                                        style={{
-                                            width: 'clamp(60px, 15vw, 80px)',
-                                            height: 'clamp(60px, 15vw, 80px)',
-                                            borderRadius: '50%',
-                                            objectFit: 'cover',
-                                            border: '3px solid rgba(234, 179, 8, 0.6)',
-                                            flexShrink: 0
-                                        }}
-                                    />
-                                    <div style={{ flex: 1, minWidth: '200px' }}>
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '8px',
-                                            marginBottom: 'clamp(8px, 2vw, 12px)',
-                                            flexWrap: 'wrap'
-                                        }}>
-                                            <strong style={{
-                                                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-                                                color: '#eab308'
-                                            }}>
-                                                Andrés L.
-                                            </strong>
-                                            <span style={{
-                                                fontSize: 'clamp(0.75rem, 3vw, 0.875rem)',
-                                                color: 'rgba(255,255,255,0.6)'
-                                            }}>
-                                                • Bogotá, Colombia • 7 días atrás
-                                            </span>
-                                        </div>
-                                        <div style={{
-                                            color: '#facc15',
-                                            fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-                                            marginBottom: 'clamp(8px, 2vw, 10px)'
-                                        }}>
-                                            ⭐⭐⭐⭐⭐
-                                        </div>
-                                        <p style={{
-                                            fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
-                                            lineHeight: '1.6',
-                                            color: 'white',
-                                            margin: 0,
-                                            fontStyle: 'italic'
-                                        }}>
-                                            "Mejor que terapia. Intenté terapia de pareja y mientras compartí mis emociones libremente y confirmé que no estaba loco, se sentía frío y sin resultados prácticos. Este plan me ofreció guía práctica para realmente avanzar conmigo mismo y con mi relación. Las técnicas del Módulo 2 me ayudaron a recuperar mi confianza."
-                                        </p>
-                                    </div>
-                                </div>
                                 
                             </div>
                         </div>
 
-                        {/* ✅ MELHORIA #7: Seção de 6 benefícios/transformações */}
+                        {/* ✅ MELHORIA #7: Seção de 3 benefícios/transformações */}
                         <div style={{
-                            marginTop: 'clamp(32px, 6vw, 48px)',
-                            marginBottom: 'clamp(32px, 6vw, 48px)'
+                            marginTop: 'clamp(20px, 4vw, 32px)',
+                            marginBottom: 'clamp(20px, 4vw, 32px)'
                         }}>
                             <h2 style={{
-                                fontSize: 'clamp(1.5rem, 6vw, 2rem)',
+                                fontSize: 'clamp(1.4rem, 5.5vw, 1.8rem)',
                                 color: 'white',
                                 fontWeight: '900',
                                 textAlign: 'center',
-                                marginBottom: 'clamp(24px, 5vw, 32px)'
+                                marginBottom: 'clamp(16px, 3vw, 24px)'
                             }}>
                                 Lo Que Obtienes Con Tu Plan Personalizado
                             </h2>
@@ -1237,23 +1123,23 @@ export default function Result({ onNavigate }: ResultProps) {
                             <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: 'clamp(16px, 4vw, 20px)'
+                                gap: 'clamp(12px, 3vw, 16px)'
                             }}>
                                 
                                 <div style={{
                                     background: 'rgba(0,0,0,0.2)',
                                     borderLeft: '4px solid #10b981',
                                     borderRadius: '8px',
-                                    padding: 'clamp(16px, 4vw, 20px)',
+                                    padding: 'clamp(12px, 3vw, 16px)',
                                     display: 'flex',
-                                    gap: '16px',
+                                    gap: '12px',
                                     alignItems: 'flex-start'
                                 }}>
-                                    <span style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', flexShrink: 0 }}>🧠</span>
+                                    <span style={{ fontSize: 'clamp(1.8rem, 5vw, 2.2rem)', flexShrink: 0 }}>🧠</span>
                                     <p style={{
-                                        fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
+                                        fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
                                         color: 'white',
-                                        lineHeight: '1.6',
+                                        lineHeight: '1.5',
                                         margin: 0
                                     }}>
                                         Técnicas extremadamente poderosas para <strong style={{ color: '#4ade80' }}>activar su oxitocina</strong>, adaptadas a tu perfil de relación
@@ -1262,38 +1148,18 @@ export default function Result({ onNavigate }: ResultProps) {
 
                                 <div style={{
                                     background: 'rgba(0,0,0,0.2)',
-                                    borderLeft: '4px solid #eab308',
-                                    borderRadius: '8px',
-                                    padding: 'clamp(16px, 4vw, 20px)',
-                                    display: 'flex',
-                                    gap: '16px',
-                                    alignItems: 'flex-start'
-                                }}>
-                                    <span style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', flexShrink: 0 }}>💭</span>
-                                    <p style={{
-                                        fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
-                                        color: 'white',
-                                        lineHeight: '1.6',
-                                        margin: 0
-                                    }}>
-                                        Tu ex empezará a <strong style={{ color: '#facc15' }}>soñar contigo</strong>, preguntándose cuándo le escribirás o llamarás
-                                    </p>
-                                </div>
-
-                                <div style={{
-                                    background: 'rgba(0,0,0,0.2)',
                                     borderLeft: '4px solid #10b981',
                                     borderRadius: '8px',
-                                    padding: 'clamp(16px, 4vw, 20px)',
+                                    padding: 'clamp(12px, 3vw, 16px)',
                                     display: 'flex',
-                                    gap: '16px',
+                                    gap: '12px',
                                     alignItems: 'flex-start'
                                 }}>
-                                    <span style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', flexShrink: 0 }}>❤️</span>
+                                    <span style={{ fontSize: 'clamp(1.8rem, 5vw, 2.2rem)', flexShrink: 0 }}>❤️</span>
                                     <p style={{
-                                        fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
+                                        fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
                                         color: 'white',
-                                        lineHeight: '1.6',
+                                        lineHeight: '1.5',
                                         margin: 0
                                     }}>
                                         Ella estará <strong style={{ color: '#4ade80' }}>indefensa e incontrolablemente atraída</strong> hacia ti
@@ -1304,56 +1170,16 @@ export default function Result({ onNavigate }: ResultProps) {
                                     background: 'rgba(0,0,0,0.2)',
                                     borderLeft: '4px solid #eab308',
                                     borderRadius: '8px',
-                                    padding: 'clamp(16px, 4vw, 20px)',
+                                    padding: 'clamp(12px, 3vw, 16px)',
                                     display: 'flex',
-                                    gap: '16px',
+                                    gap: '12px',
                                     alignItems: 'flex-start'
                                 }}>
-                                    <span style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', flexShrink: 0 }}>🔥</span>
+                                    <span style={{ fontSize: 'clamp(1.8rem, 5vw, 2.2rem)', flexShrink: 0 }}>💪</span>
                                     <p style={{
-                                        fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
+                                        fontSize: 'clamp(0.9rem, 3.5vw, 1.05rem)',
                                         color: 'white',
-                                        lineHeight: '1.6',
-                                        margin: 0
-                                    }}>
-                                        Ella volverá a tu cama, <strong style={{ color: '#facc15' }}>lista para comprometerse</strong> como nunca antes
-                                    </p>
-                                </div>
-
-                                <div style={{
-                                    background: 'rgba(0,0,0,0.2)',
-                                    borderLeft: '4px solid #10b981',
-                                    borderRadius: '8px',
-                                    padding: 'clamp(16px, 4vw, 20px)',
-                                    display: 'flex',
-                                    gap: '16px',
-                                    alignItems: 'flex-start'
-                                }}>
-                                    <span style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', flexShrink: 0 }}>🎯</span>
-                                    <p style={{
-                                        fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
-                                        color: 'white',
-                                        lineHeight: '1.6',
-                                        margin: 0
-                                    }}>
-                                        Ella estará <strong style={{ color: '#4ade80' }}>segura de que fue su idea</strong> recuperarte
-                                    </p>
-                                </div>
-
-                                <div style={{
-                                    background: 'rgba(0,0,0,0.2)',
-                                    borderLeft: '4px solid #eab308',
-                                    borderRadius: '8px',
-                                    padding: 'clamp(16px, 4vw, 20px)',
-                                    display: 'flex',
-                                    gap: '16px',
-                                    alignItems: 'flex-start'
-                                }}>
-                                    <span style={{ fontSize: 'clamp(2rem, 6vw, 2.5rem)', flexShrink: 0 }}>💪</span>
-                                    <p style={{
-                                        fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)',
-                                        color: 'white',
-                                        lineHeight: '1.6',
+                                        lineHeight: '1.5',
                                         margin: 0
                                     }}>
                                         Tendrás <strong style={{ color: '#facc15' }}>confianza y autoestima elevadas</strong>
@@ -1363,86 +1189,35 @@ export default function Result({ onNavigate }: ResultProps) {
                             </div>
                         </div>
 
-                        {/* ✅ MELHORIA #8: CTA otimizado de 3 linhas */}
-                        <button 
-                            className="cta-button btn-green btn-size-4 btn-animation-pulse" 
-                            onClick={handleCTAClick}
-                            style={{
-                                width: '100%',
-                                background: selectedPlan ? 'linear-gradient(135deg, #10b981, #059669)' : 'rgba(100,100,100,0.5)',
-                                color: 'white',
-                                fontWeight: '900',
-                                padding: 'clamp(24px, 5vw, 32px)',
-                                borderRadius: '16px',
-                                border: selectedPlan ? '4px solid #4ade80' : '4px solid rgba(150,150,150,0.5)',
-                                cursor: selectedPlan ? 'pointer' : 'not-allowed',
-                                boxShadow: selectedPlan ? '0 8px 32px rgba(16, 185, 129, 0.6)' : 'none',
-                                animation: selectedPlan ? 'pulse 1.5s infinite' : 'none',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                gap: 'clamp(8px, 2vw, 10px)',
-                                marginBottom: 'clamp(20px, 4vw, 24px)',
-                                transition: 'all 0.3s ease'
-                            }}
-                        >
-                            {/* Linha 1: Texto principal */}
-                            <span style={{
-                                fontSize: 'clamp(1.25rem, 5vw, 1.75rem)',
-                                lineHeight: '1.3'
-                            }}>
-                                {selectedPlan 
-                                    ? `🚀 ACCEDER A MI PLAN POR $${selectedPlan}` 
-                                    : '👆 ELIGE UN PLAN ARRIBA PRIMERO'
-                                }
-                            </span>
-                            
-                            {/* Linha 2: Urgência */}
-                            <span style={{
-                                fontSize: 'clamp(0.95rem, 3.8vw, 1.15rem)',
-                                color: '#fef08a',
-                                fontWeight: '700'
-                            }}>
-                                ⏰ Tu análisis expira en {formatTime(offerTimeLeft)} • Solo {spotsLeft} vacantes
-                            </span>
-                            
-                            {/* Linha 3: Garantia */}
-                            <span style={{
-                                fontSize: 'clamp(0.85rem, 3.5vw, 1rem)',
-                                color: 'rgba(255,255,255,0.95)',
-                                fontWeight: '600'
-                            }}>
-                                🛡️ Garantía de 30 días • Riesgo cero
-                            </span>
-                        </button>
+                        {/* CTA secundário removido - já está após os planos */}
 
                         {/* ✅ MELHORIA #9: Garantia compactada */}
                         <div style={{
                             background: 'linear-gradient(135deg, rgba(74, 222, 128, 0.15), rgba(16, 185, 129, 0.1))',
                             border: '3px solid rgba(74, 222, 128, 0.4)',
                             borderRadius: '16px',
-                            padding: 'clamp(24px, 5vw, 32px)',
-                            margin: '0 0 clamp(32px, 6vw, 40px) 0',
+                            padding: 'clamp(16px, 4vw, 24px)',
+                            margin: '0 0 clamp(20px, 4vw, 32px) 0',
                             textAlign: 'center',
                             boxShadow: '0 8px 32px rgba(74, 222, 128, 0.3)'
                         }}>
-                            <div style={{ fontSize: 'clamp(3.5rem, 12vw, 5rem)', marginBottom: 'clamp(12px, 3vw, 16px)' }}>
+                            <div style={{ fontSize: 'clamp(2.5rem, 10vw, 4rem)', marginBottom: 'clamp(10px, 2.5vw, 14px)' }}>
                                 🛡️
                             </div>
                             <h3 style={{
-                                fontSize: 'clamp(1.4rem, 6vw, 2rem)',
+                                fontSize: 'clamp(1.2rem, 5vw, 1.6rem)',
                                 color: '#4ade80',
-                                marginBottom: 'clamp(16px, 4vw, 20px)',
+                                marginBottom: 'clamp(12px, 3vw, 16px)',
                                 fontWeight: '900',
                                 textTransform: 'uppercase'
                             }}>
                                 GARANTÍA BLINDADA DE 30 DÍAS
                             </h3>
                             <p style={{
-                                fontSize: 'clamp(1.05rem, 4vw, 1.25rem)',
-                                lineHeight: '1.7',
+                                fontSize: 'clamp(0.95rem, 3.8vw, 1.15rem)',
+                                lineHeight: '1.6',
                                 color: 'white',
-                                marginBottom: 'clamp(16px, 4vw, 20px)'
+                                marginBottom: 'clamp(12px, 3vw, 16px)'
                             }}>
                                 Si en 30 días no ves <strong style={{ color: '#4ade80' }}>resultados concretos</strong> en tu reconquista 
                                 (mensajes de {gender === 'HOMBRE' ? 'ella' : 'él'}, cambio de actitud, reaproximación), 
@@ -1450,20 +1225,20 @@ export default function Result({ onNavigate }: ResultProps) {
                             </p>
                             <div style={{
                                 display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                                gap: 'clamp(12px, 3vw, 16px)',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                                gap: 'clamp(8px, 2vw, 12px)',
                                 textAlign: 'left'
                             }}>
-                                <p style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: 'rgba(255,255,255,0.95)', margin: 0 }}>
+                                <p style={{ fontSize: 'clamp(0.85rem, 3.5vw, 1rem)', color: 'rgba(255,255,255,0.95)', margin: 0 }}>
                                     ✅ Sin preguntas incómodas
                                 </p>
-                                <p style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: 'rgba(255,255,255,0.95)', margin: 0 }}>
+                                <p style={{ fontSize: 'clamp(0.85rem, 3.5vw, 1rem)', color: 'rgba(255,255,255,0.95)', margin: 0 }}>
                                     ✅ Sin burocracia
                                 </p>
-                                <p style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: 'rgba(255,255,255,0.95)', margin: 0 }}>
+                                <p style={{ fontSize: 'clamp(0.85rem, 3.5vw, 1rem)', color: 'rgba(255,255,255,0.95)', margin: 0 }}>
                                     ✅ Reembolso en 24-48 horas
                                 </p>
-                                <p style={{ fontSize: 'clamp(0.95rem, 3.8vw, 1.1rem)', color: '#facc15', margin: 0, fontWeight: '700' }}>
+                                <p style={{ fontSize: 'clamp(0.85rem, 3.5vw, 1rem)', color: '#facc15', margin: 0, fontWeight: '700' }}>
                                     ✅ RIESGO CERO PARA TI
                                 </p>
                             </div>
@@ -1474,15 +1249,15 @@ export default function Result({ onNavigate }: ResultProps) {
                             background: 'rgba(0,0,0,0.3)',
                             border: '2px solid rgba(255,255,255,0.1)',
                             borderRadius: '16px',
-                            padding: 'clamp(20px, 5vw, 28px)',
-                            marginBottom: 'clamp(32px, 6vw, 40px)'
+                            padding: 'clamp(14px, 3.5vw, 20px)',
+                            marginBottom: 'clamp(20px, 4vw, 32px)'
                         }}>
                             <h3 style={{
-                                fontSize: 'clamp(1.25rem, 5vw, 1.6rem)',
+                                fontSize: 'clamp(1.15rem, 4.5vw, 1.4rem)',
                                 color: 'white',
                                 fontWeight: '900',
                                 textAlign: 'center',
-                                marginBottom: 'clamp(20px, 4vw, 24px)'
+                                marginBottom: 'clamp(14px, 3vw, 18px)'
                             }}>
                                 ❓ PREGUNTAS FRECUENTES
                             </h3>
@@ -1490,7 +1265,7 @@ export default function Result({ onNavigate }: ResultProps) {
                             <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: 'clamp(16px, 4vw, 20px)'
+                                gap: 'clamp(10px, 2.5vw, 14px)'
                             }}>
                                 {/* Pergunta 1 */}
                                 <details style={{
