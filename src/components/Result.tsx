@@ -609,7 +609,7 @@ export default function Result({ onNavigate }: ResultProps) {
                         }}>
                             {/* Foto 1 - COLE O LINK DA PRIMEIRA IMAGEM NO src="" */}
                             <img 
-                                src="" 
+                                src="https://i.ibb.co/k63yYvQZ/01-triste.png" 
                                 alt="Casal reconciliado - Foto 1" 
                                 style={{
                                     width: '100%',
@@ -624,7 +624,7 @@ export default function Result({ onNavigate }: ResultProps) {
                             
                             {/* Foto 2 - COLE O LINK DA SEGUNDA IMAGEM NO src="" */}
                             <img 
-                                src="" 
+                                src="https://i.ibb.co/Z1KkPxC9/02-feliz.webp" 
                                 alt="Casal reconciliado - Foto 2" 
                                 style={{
                                     width: '100%',
@@ -984,7 +984,7 @@ export default function Result({ onNavigate }: ResultProps) {
                                 }}>
                                     {/* Avatar Mateo - COLE O LINK DA FOTO NO src="" */}
                                     <img 
-                                        src="" 
+                                        src="https://i.ibb.co/SXrh3Tds/Generatedimage-1768685267274.png" 
                                         alt="Mateo R." 
                                         style={{
                                             width: 'clamp(55px, 14vw, 70px)',
@@ -1050,7 +1050,7 @@ export default function Result({ onNavigate }: ResultProps) {
                                 }}>
                                     {/* Avatar Pablo - COLE O LINK DA FOTO NO src="" */}
                                     <img 
-                                        src="" 
+                                        src="https://i.ibb.co/XdsjWTm/Generatedimage-1768481087053.png" 
                                         alt="Pablo S." 
                                         style={{
                                             width: 'clamp(55px, 14vw, 70px)',
